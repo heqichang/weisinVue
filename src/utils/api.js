@@ -34,7 +34,7 @@ export default {
 
 
     // 登录
-    login: function (name, pass) {
+    login: function (name, pass, captcha, timestamp) {
 
         return request({
             method: "post",
@@ -42,6 +42,8 @@ export default {
             data: {
                 'username': name,
                 'secret': pass,
+                'captcha': captcha,
+                'timestamp': timestamp,
             },
         })
     },

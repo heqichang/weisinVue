@@ -9,6 +9,10 @@
                    <el-form-item label="密码" prop="password">
                        <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
                    </el-form-item>
+                   <el-form-item label="验证码" prop="captcha">
+                       <el-input v-model="form.captcha" autocomplete="off"></el-input>
+                       <img :src="captchaUrl" @click="refreshCaptcha">
+                   </el-form-item>
 
                    <el-form-item>
                        <el-button type="primary" @click="submitForm('ruleForm')">登录</el-button>
@@ -36,6 +40,7 @@
                 form: {
                     username: '',
                     password: '',
+                    captcha: '',
                 },
 
                 rules: {
@@ -45,11 +50,17 @@
                     password: [
                         { required: true, message: '必填', trigger: 'blur' }
                     ]
-                }
+                },
 
-
+                captchaUrl: '',
+                timestamp: 0,
             }
 
+        },
+
+        created() {
+            this.timestamp = new Date().getTime();
+            this.captchaUrl = 'http://192.168.101.10/captcha/' + this.timestamp;
         },
 
         methods: {
@@ -69,7 +80,7 @@
 
                         let that = this;
 
-                        api.login(this.form.username, this.form.password).then(function (res) {
+                        api.login(this.form.username, this.form.password, this.form.captcha, this.timestamp).then(function (res) {
 
                             loading.close();
                             if (res.status == 200) {
@@ -99,6 +110,11 @@
                         return false;
                     }
                 });
+            },
+
+            refreshCaptcha() {
+                this.timestamp = new Date().getTime();
+                this.captchaUrl = 'http://192.168.101.10/captcha/' + this.timestamp;
             },
 
             resetForm(formName) {
