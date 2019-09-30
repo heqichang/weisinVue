@@ -6,8 +6,9 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import Vue2Editor from "vue2-editor";
 import axios from 'axios'
+import env from './utils/env';
 
-axios.defaults.baseURL = 'http://192.168.101.10';
+axios.defaults.baseURL = env.BaseUrl;
 // axios.defaults.withCredentials = true;
 axios.defaults.headers.common["my-api-version"] = "v1";
 

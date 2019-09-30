@@ -27,7 +27,9 @@
 
 <script>
 
+    import env from '../utils/env';
     import api from '../utils/api';
+
     import { SET_TOKEN } from "../mutation-types";
 
     export default {
@@ -60,7 +62,7 @@
 
         created() {
             this.timestamp = new Date().getTime();
-            this.captchaUrl = 'http://192.168.101.10/captcha/' + this.timestamp;
+            this.captchaUrl = env.BaseUrl + '/captcha/' + this.timestamp;
         },
 
         methods: {
@@ -114,7 +116,7 @@
 
             refreshCaptcha() {
                 this.timestamp = new Date().getTime();
-                this.captchaUrl = 'http://192.168.101.10/captcha/' + this.timestamp;
+                this.captchaUrl = this.captchaUrl = env.BaseUrl + '/captcha/' + this.timestamp;
             },
 
             resetForm(formName) {
